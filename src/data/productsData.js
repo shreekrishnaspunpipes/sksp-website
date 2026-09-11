@@ -117,7 +117,7 @@ export const products = [
     name: 'RCC Manhole Chambers',
     category: 'real-estate',
     categoryName: 'Real Estate & Urban Development',
-    image: '/images/RCC MANHOLE CHAMBERS.png',
+    image: '/images/RCC_MANHOLE_CHAMBERS_.png',
     tagline: 'Precast Modular Manhole Chambers for Underground Sewer Utilities',
     shortDescription: 'Factory-engineered modular precast RCC manhole rings, base units, and conical covers for sewer networks and telecommunication vaults.',
     description: `Engineered precast RCC Manhole Chambers offer standard dimensional accuracy, tight seals against groundwater ingress, and structural resilience against earth movement and traffic impact. Ideal for smart city sewerage projects.`,

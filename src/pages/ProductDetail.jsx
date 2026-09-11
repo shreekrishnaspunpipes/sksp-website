@@ -86,7 +86,7 @@ export default function ProductDetail({ onOpenQuoteModal }) {
                 product.slug === 'rcc-drain-covers' || product.slug === 'railway-stone-ballast'
                   ? 'object-contain'
                   : product.slug === 'rcc-manhole-chambers'
-                  ? 'object-cover object-[center_40%]'
+                  ? 'object-cover object-center'
                   : product.slug === 'rcc-fencing-poles'
                   ? 'object-cover object-top'
                   : product.slug === 'rcc-boundary-walls'

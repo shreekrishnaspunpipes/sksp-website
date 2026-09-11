@@ -7,6 +7,9 @@ import { products } from '../data/productsData';
 const WEB3FORMS_ACCESS_KEY = '3f5c005a-9607-420c-a382-8bed22f30667';
 const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
 
+const INDIAN_MOBILE_REGEX = /^([6-9])(?!\1{9}$)\d{9}$/;
+const PHONE_ERROR_MESSAGE = 'Please enter a valid 10-digit Indian mobile number.';
+
 export default function Contact({ selectedProductTitle = '' }) {
   const [formData, setFormData] = useState({
     name: '',
@@ -21,10 +24,24 @@ export default function Contact({ selectedProductTitle = '' }) {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
+  const [phoneError, setPhoneError] = useState('');
+
+  const handlePhoneChange = (e) => {
+    const digitsOnly = e.target.value.replace(/\D/g, '').slice(0, 10);
+    setFormData({ ...formData, phone: digitsOnly });
+    if (phoneError) setPhoneError('');
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitError('');
+
+    if (!INDIAN_MOBILE_REGEX.test(formData.phone)) {
+      setPhoneError(PHONE_ERROR_MESSAGE);
+      return;
+    }
+    setPhoneError('');
+
     setSubmitting(true);
 
     try {
@@ -184,11 +201,16 @@ export default function Contact({ selectedProductTitle = '' }) {
                     type="tel"
                     name="phone"
                     required
-                    placeholder="e.g. +91 9829039655"
+                    inputMode="numeric"
+                    maxLength={10}
+                    placeholder="e.g. 9829039655"
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    onChange={handlePhoneChange}
                     className="w-full px-4 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-[#062A5A] focus:outline-none"
                   />
+                  {phoneError && (
+                    <p className="text-xs text-red-600 font-semibold mt-1">{phoneError}</p>
+                  )}
                 </div>
               </div>
 

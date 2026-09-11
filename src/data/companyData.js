@@ -130,7 +130,7 @@ export const productsList = [
     id: "rcc-manhole-chambers",
     title: "RCC MANHOLE CHAMBERS",
     certified: "Municipal Standard Grade",
-    image: "/images/RCC MANHOLE CHAMBERS.png",
+    image: "/images/RCC_MANHOLE_CHAMBERS_.png",
     shortDesc: "High quality precast RCC Manhole Chambers engineered for strength, durability and efficient performance in all types of underground drainage systems.",
     description: "Pre-fabricated conical and cylindrical RCC chambers for rapid inspection access in municipal sewer networks.",
     keyFeatures: [
