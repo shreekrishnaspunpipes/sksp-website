@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@500;600;700&family=Montserrat:wght@600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Inter', sans-serif;
+  }
+  body {
+    @apply bg-[#F4F7FA] text-[#10233D] antialiased overflow-x-hidden;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Oswald', 'Montserrat', sans-serif;
+    letter-spacing: 0.02em;
+  }
+}
+
+/* Custom brand styling primitives */
+.sksp-gold-accent-line {
+  position: relative;
+}
+.sksp-gold-accent-line::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 3px;
+  background-color: #F2A900;
+  margin-top: 12px;
+}
+
+.sksp-hero-overlay {
+  background: linear-gradient(135deg, rgba(6, 42, 90, 0.92) 0%, rgba(4, 26, 54, 0.82) 100%);
+}
+
+.sksp-card-glow:hover {
+  box-shadow: 0 16px 36px -4px rgba(6, 42, 90, 0.16), 0 0 0 1px rgba(242, 169, 0, 0.3);
+}
+
+/* Infinite Marquee Animations for 2-Row Carousel */
+@keyframes marquee-left {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+.animate-marquee-left {
+  animation: marquee-left 35s linear infinite;
+}
+
+.animate-marquee-right {
+  animation: marquee-right 35s linear infinite;
+}
+
+.animate-marquee-left:hover,
+.animate-marquee-right:hover {
+  animation-play-state: paused;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #F4F7FA;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #062A5A;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-left,
+  .animate-marquee-right {
+    animation: none !important;
+    transform: none !important;
+  }
+}
