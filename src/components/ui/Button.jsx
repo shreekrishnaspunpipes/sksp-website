@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function Button({ children, to, onClick, variant = 'primary', size = 'md', className = '', icon: Icon, type = 'button' }) {
-  const baseStyles = 'inline-flex items-center justify-center font-bold tracking-wide transition-all duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2';
+export default function Button({ children, to, onClick, variant = 'primary', size = 'md', className = '', icon: Icon, type = 'button', disabled = false }) {
+  const baseStyles = 'inline-flex items-center justify-center font-bold tracking-wide transition-all duration-200 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed';
   
   const variants = {
     primary: 'bg-[#F2A900] hover:bg-[#d99700] text-[#041A36] focus:ring-[#F2A900] shadow-md hover:shadow-lg',
@@ -30,7 +30,7 @@ export default function Button({ children, to, onClick, variant = 'primary', siz
   }
 
   return (
-    <button type={type} onClick={onClick} className={combinedClasses}>
+    <button type={type} onClick={onClick} disabled={disabled} className={combinedClasses}>
       {children}
       {Icon && <Icon className="ml-2 w-4 h-4" />}
     </button>

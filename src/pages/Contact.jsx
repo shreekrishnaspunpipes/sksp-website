@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { Phone, Mail, Globe, MapPin, Send, CheckCircle2 } from 'lucide-react';
+import { Phone, Mail, Globe, MapPin, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import Button from '../components/ui/Button';
 import { companyInfo } from '../data/companyData';
 import { products } from '../data/productsData';
+
+const WEB3FORMS_ACCESS_KEY = '3f5c005a-9607-420c-a382-8bed22f30667';
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
 
 export default function Contact({ selectedProductTitle = '' }) {
   const [formData, setFormData] = useState({
@@ -16,10 +19,45 @@ export default function Contact({ selectedProductTitle = '' }) {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitError('');
+    setSubmitting(true);
+
+    try {
+      const form = e.target;
+      const data = new FormData(form);
+      data.append('access_key', WEB3FORMS_ACCESS_KEY);
+
+      const response = await fetch(WEB3FORMS_ENDPOINT, {
+        method: 'POST',
+        body: data
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitted(true);
+        setFormData({
+          name: '',
+          phone: '',
+          email: '',
+          product: '',
+          quantity: '',
+          location: '',
+          message: ''
+        });
+      } else {
+        setSubmitError(result.message || 'Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      setSubmitError('Unable to submit your inquiry right now. Please check your connection and try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -123,11 +161,16 @@ export default function Contact({ selectedProductTitle = '' }) {
                 <p className="text-xs text-slate-500 mt-1">Fill out your details to receive pricing, specifications, or CAD drawings.</p>
               </div>
 
+              <input type="hidden" name="subject" value="New Project Inquiry - Shree Krishna Spun Pipes" />
+              <input type="hidden" name="from_name" value="Shree Krishna Spun Pipes Website" />
+              <input type="checkbox" name="botcheck" className="hidden" style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
+
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-bold text-[#062A5A] uppercase mb-1">Your Full Name *</label>
                   <input
                     type="text"
+                    name="name"
                     required
                     placeholder="e.g. Rajesh Sharma"
                     value={formData.name}
@@ -139,6 +182,7 @@ export default function Contact({ selectedProductTitle = '' }) {
                   <label className="block text-xs font-bold text-[#062A5A] uppercase mb-1">Phone Number *</label>
                   <input
                     type="tel"
+                    name="phone"
                     required
                     placeholder="e.g. +91 9829039655"
                     value={formData.phone}
@@ -153,6 +197,7 @@ export default function Contact({ selectedProductTitle = '' }) {
                   <label className="block text-xs font-bold text-[#062A5A] uppercase mb-1">Email Address</label>
                   <input
                     type="email"
+                    name="email"
                     placeholder="e.g. rajesh@construction.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -163,6 +208,7 @@ export default function Contact({ selectedProductTitle = '' }) {
                   <label className="block text-xs font-bold text-[#062A5A] uppercase mb-1">Product Interest *</label>
                   <select
                     required
+                    name="product"
                     value={formData.product}
                     onChange={(e) => setFormData({ ...formData, product: e.target.value })}
                     className="w-full px-4 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-[#062A5A] focus:outline-none bg-white"
@@ -180,6 +226,7 @@ export default function Contact({ selectedProductTitle = '' }) {
                   <label className="block text-xs font-bold text-[#062A5A] uppercase mb-1">Estimated Quantity</label>
                   <input
                     type="text"
+                    name="quantity"
                     placeholder="e.g. 500 meters / 50 pcs"
                     value={formData.quantity}
                     onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
@@ -190,6 +237,7 @@ export default function Contact({ selectedProductTitle = '' }) {
                   <label className="block text-xs font-bold text-[#062A5A] uppercase mb-1">Project Site Location</label>
                   <input
                     type="text"
+                    name="location"
                     placeholder="e.g. Kota, Rajasthan"
                     value={formData.location}
                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
@@ -202,6 +250,7 @@ export default function Contact({ selectedProductTitle = '' }) {
                 <label className="block text-xs font-bold text-[#062A5A] uppercase mb-1">Project Details / Message</label>
                 <textarea
                   rows="4"
+                  name="message"
                   placeholder="Provide specifications, diameter class (e.g. NP3/NP4), delivery timeline..."
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -209,8 +258,15 @@ export default function Contact({ selectedProductTitle = '' }) {
                 />
               </div>
 
-              <Button type="submit" variant="primary" size="lg" icon={Send} className="w-full">
-                Submit Project Inquiry
+              {submitError && (
+                <div className="flex items-start space-x-2 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs font-semibold">
+                  <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                  <span>{submitError}</span>
+                </div>
+              )}
+
+              <Button type="submit" variant="primary" size="lg" icon={Send} className="w-full" disabled={submitting}>
+                {submitting ? 'Submitting...' : 'Submit Project Inquiry'}
               </Button>
             </form>
           )}

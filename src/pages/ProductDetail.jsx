@@ -74,11 +74,29 @@ export default function ProductDetail({ onOpenQuoteModal }) {
         </div>
 
         <div className="lg:col-span-6">
-          <div className="rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-slate-100 relative">
+          <div
+            className={`rounded-2xl overflow-hidden shadow-2xl border-4 border-white relative ${
+              product.slug === 'railway-stone-ballast' ? 'bg-white' : 'bg-slate-100'
+            }`}
+          >
             <img
               src={product.image}
               alt={product.name}
-              className="w-full h-[380px] sm:h-[450px] object-cover"
+              className={`w-full h-[380px] sm:h-[450px] object-center ${
+                product.slug === 'rcc-drain-covers' || product.slug === 'railway-stone-ballast'
+                  ? 'object-contain'
+                  : product.slug === 'rcc-manhole-chambers'
+                  ? 'object-cover object-[center_40%]'
+                  : product.slug === 'rcc-fencing-poles'
+                  ? 'object-cover object-top'
+                  : product.slug === 'rcc-boundary-walls'
+                  ? 'object-cover object-[30%_center]'
+                  : product.slug === 'rcc-earthing-pits'
+                  ? 'object-cover object-[65%_center]'
+                  : product.slug === 'customized-rcc-products'
+                  ? 'object-cover object-[70%_center]'
+                  : 'object-cover'
+              }`}
             />
             <div className="absolute bottom-4 right-4 bg-[#041A36] text-white text-xs font-bold px-4 py-2 rounded-lg border border-[#F2A900]">
               Certified Manufacturer Quality

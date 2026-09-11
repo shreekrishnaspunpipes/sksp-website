@@ -110,7 +110,7 @@ export const productsList = [
     id: "box-culvert",
     title: "BOX CULVERT",
     certified: "Heavy Infrastructure Grade",
-    image: "/images/box culverts.png",
+    image: "/images/BOX COLVERT.png",
     shortDesc: "High quality precast concrete Box Culverts designed for strength, durability and long-lasting performance.",
     description: "Robust precast concrete box structures for cross-drainage under roads, railways, and bridges, providing exceptional hydraulic capacity.",
     keyFeatures: [
@@ -130,7 +130,7 @@ export const productsList = [
     id: "rcc-manhole-chambers",
     title: "RCC MANHOLE CHAMBERS",
     certified: "Municipal Standard Grade",
-    image: "/images/septic tank & more.png",
+    image: "/images/RCC MANHOLE CHAMBERS.png",
     shortDesc: "High quality precast RCC Manhole Chambers engineered for strength, durability and efficient performance in all types of underground drainage systems.",
     description: "Pre-fabricated conical and cylindrical RCC chambers for rapid inspection access in municipal sewer networks.",
     keyFeatures: [
@@ -150,7 +150,7 @@ export const productsList = [
     id: "paver-blocks",
     title: "PAVER BLOCKS",
     certified: "Heavy-Duty Interlocking",
-    image: "/images/about-page-infrastructure.png",
+    image: "/images/PAVER BLOCKS.png",
     shortDesc: "High quality paver blocks designed for strength, durability and aesthetic appeal. Built to withstand heavy loads.",
     description: "Vibrant and high-compressive strength concrete interlocking blocks for industrial yards, parking lots, and walkways.",
     keyFeatures: [
@@ -169,7 +169,7 @@ export const productsList = [
     id: "kerb-stones",
     title: "KERB STONES",
     certified: "Highway Edge Grade",
-    image: "/images/about-page-infrastructure.png",
+    image: "/images/KERB STONES.png",
     shortDesc: "High-quality RCC Kerb Stones engineered for strength, durability and aesthetic finish.",
     description: "Precision-moulded edge stones for defining pavements, road medians, and landscape boundaries.",
     keyFeatures: [
@@ -188,7 +188,7 @@ export const productsList = [
     id: "rcc-septic-tanks",
     title: "READYMADE RCC SEPTIC TANKS",
     certified: "Hygienic Sanitation Grade",
-    image: "/images/septic tank & more.png",
+    image: "/images/READYMADE RCC SEPTIC TANKS.jpg",
     shortDesc: "High-quality, leak-proof RCC Septic Tanks designed for safe, hygienic and long-lasting wastewater management.",
     description: "Precast monolithic RCC septic storage tanks engineered for immediate installation without long curing times.",
     keyFeatures: [
@@ -207,7 +207,7 @@ export const productsList = [
     id: "rcc-water-tanks",
     title: "READYMADE RCC WATER TANKS",
     certified: "Food-Grade Safe Precast",
-    image: "/images/septic tank & more.png",
+    image: "/images/READYMADE RCC WATER TANKS.png",
     shortDesc: "High-quality, leak-proof RCC Water Tanks designed for safe, reliable and long-lasting water storage.",
     description: "Durable precast water storage structures built for agricultural, domestic, and industrial emergency reserves.",
     keyFeatures: [
@@ -226,7 +226,7 @@ export const productsList = [
     id: "rcc-fencing-poles",
     title: "RCC FENCING POLES",
     certified: "Heavy Duty Agricultural",
-    image: "/images/about-page-infrastructure.png",
+    image: "/images/RCC FENCING POLES.png",
     shortDesc: "High-strength RCC Fencing Poles designed for heavy loads, offering durability and long service life.",
     description: "Reinforced concrete boundary posts with pre-drilled wire holes for security fencing and farm enclosures.",
     keyFeatures: [
@@ -245,7 +245,7 @@ export const productsList = [
     id: "rcc-drain-covers",
     title: "RCC DRAIN COVERS AND SLABS",
     certified: "High Dynamic Load Capacity",
-    image: "/images/u drains.png",
+    image: "/images/RCC DRAIN COVERS AND SLABS.png",
     shortDesc: "High-quality RCC Drain Covers and Slabs engineered for strength, safety and long-lasting performance.",
     description: "Slotted and solid heavy-duty RCC cover slabs for storm drains, footpaths, and heavy vehicle driveways.",
     keyFeatures: [
@@ -264,7 +264,7 @@ export const productsList = [
     id: "rcc-boundary-walls",
     title: "RCC BOUNDARY WALLS & COMPOUND WALLS",
     certified: "Precast Rapid Fence",
-    image: "/images/about-page-infrastructure.png",
+    image: "/images/RCC BOUNDDARY WALLS.png",
     shortDesc: "High-quality RCC Boundary & Compound Walls designed for strength, security and long-lasting performance.",
     description: "Modular precast boundary wall panels and columns for instant, secure, and attractive site perimeter protection.",
     keyFeatures: [
@@ -283,7 +283,7 @@ export const productsList = [
     id: "railway-aggregates",
     title: "Crusher Stone, Ballast Stone & Blanket for Railway",
     certified: "Indian Railways Standard",
-    image: "/images/industrial.png",
+    image: "/images/CRUSHER_STONE BALLAST_STONE BLANKET FOR RAILWAY_.png",
     shortDesc: "High-quality aggregates engineered for superior performance and long-lasting strength in railway infrastructure.",
     description: "High-grade track ballast, crusher stones, and sub-ballast blanket materials conforming to RDSO & Indian Railways specifications.",
     keyFeatures: [
@@ -302,7 +302,7 @@ export const productsList = [
     id: "rcc-earthing-pits",
     title: "RCC EARTHING PITS",
     certified: "Electrical Safety Standard",
-    image: "/images/septic tank & more.png",
+    image: "/images/RCC EARTHING PITS.png",
     shortDesc: "High-quality RCC Earthing Pits engineered for safety, durability and long-term performance in electrical installations.",
     description: "Protective RCC chamber covers and inspection pits for transformer earthing, electrical substations, and industrial grids.",
     keyFeatures: [
@@ -321,7 +321,7 @@ export const productsList = [
     id: "rcc-guard-posts",
     title: "RCC GUARD POSTS",
     certified: "Traffic & Boundary Marker",
-    image: "/images/about-page-infrastructure.png",
+    image: "/images/RCC GUARD POSTS.png",
     shortDesc: "High-quality RCC Guard Posts designed for strength, security and long-lasting performance.",
     description: "Heavy concrete bollards and guard posts for gate security, highway edge markings, and perimeter protection.",
     keyFeatures: [
@@ -340,7 +340,7 @@ export const productsList = [
     id: "customized-rcc-products",
     title: "CUSTOMIZED RCC PRODUCTS",
     certified: "Custom Engineering",
-    image: "/images/box culverts.png",
+    image: "/images/CUSTOMIZED RCC PRODUCTS.png",
     shortDesc: "Engineered RCC solutions tailored to meet unique project requirements with high precision and durability.",
     description: "Custom precast structural components engineered to client blueprints for specialized infrastructure projects.",
     keyFeatures: [
