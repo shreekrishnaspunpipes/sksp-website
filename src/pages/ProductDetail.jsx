@@ -80,10 +80,12 @@ export default function ProductDetail({ onOpenQuoteModal }) {
             }`}
           >
             <img
-              src={product.image}
+              src={product.slug === 'rcc-hume-pipes' ? '/images/rcc hume pipes-no-label.png' : product.image}
               alt={product.name}
               className={`w-full h-[380px] sm:h-[450px] object-center ${
-                product.slug === 'rcc-drain-covers' || product.slug === 'railway-stone-ballast'
+                product.slug === 'rcc-hume-pipes'
+                  ? 'object-cover'
+                  : product.slug === 'rcc-drain-covers' || product.slug === 'railway-stone-ballast'
                   ? 'object-contain'
                   : product.slug === 'rcc-manhole-chambers'
                   ? 'object-cover object-center'

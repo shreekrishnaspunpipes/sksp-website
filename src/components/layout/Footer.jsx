@@ -34,6 +34,21 @@ export default function Footer({ onOpenQuoteModal }) {
             <ShieldCheck className="w-4 h-4 flex-shrink-0" />
             <span>ISO 9001:2015 Certified | Government Approved Supplier</span>
           </div>
+
+          <div className="flex items-center space-x-2 text-xs text-[#F2A900] font-semibold bg-slate-900/60 p-3 rounded-lg border border-slate-800 inline-block">
+            <ShieldCheck className="w-4 h-4 flex-shrink-0" />
+            <span>Tax Document | GST Registration Certificate (Form GST REG-06)</span>
+          </div>
+
+          <div className="flex items-center space-x-2 text-xs text-[#F2A900] font-semibold bg-slate-900/60 p-3 rounded-lg border border-slate-800 inline-block">
+            <ShieldCheck className="w-4 h-4 flex-shrink-0" />
+            <span>MSME Registration | UDYAM Registration Certificate (MSME)</span>
+          </div>
+
+          <div className="flex items-center space-x-2 text-xs text-[#F2A900] font-semibold bg-slate-900/60 p-3 rounded-lg border border-slate-800 inline-block">
+            <ShieldCheck className="w-4 h-4 flex-shrink-0" />
+            <span>Government Identification | Income Tax PAN Card</span>
+          </div>
         </div>
 
         {/* Col 2: Quick Links */}
@@ -46,7 +61,6 @@ export default function Footer({ onOpenQuoteModal }) {
             <li><Link to="/why-sksp" className="hover:text-[#F2A900] transition-colors">Why SKSP</Link></li>
             <li><Link to="/sustainability" className="hover:text-[#F2A900] transition-colors">Sustainability & Innovation</Link></li>
             <li><Link to="/clients" className="hover:text-[#F2A900] transition-colors">Client Trust Wall</Link></li>
-            <li><Link to="/certifications" className="hover:text-[#F2A900] transition-colors">Certifications & Registrations</Link></li>
             <li><Link to="/contact" className="hover:text-[#F2A900] transition-colors">Contact Us</Link></li>
           </ul>
         </div>
@@ -104,9 +118,9 @@ export default function Footer({ onOpenQuoteModal }) {
       <div className="max-w-7xl mx-auto px-4 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
         <p>© {new Date().getFullYear()} Shree Krishna Spun Pipes. All Rights Reserved.</p>
         <div className="flex items-center space-x-6">
-          <Link to="/certifications" className="hover:text-white transition-colors">Compliance & ISO</Link>
+          <span className="hover:text-white transition-colors">Compliance & ISO</span>
           <Link to="/support" className="hover:text-white transition-colors">Technical Support</Link>
-          <button 
+          <button
             onClick={() => onOpenQuoteModal && onOpenQuoteModal()}
             className="text-[#F2A900] hover:underline font-semibold"
           >

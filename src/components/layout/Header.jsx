@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { Phone, Mail, Award, Menu, X, ChevronDown, FileText, ArrowRight } from 'lucide-react';
 import { companyInfo } from '../../data/companyData';
@@ -9,6 +9,32 @@ export default function Header({ onOpenQuoteModal }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
   const location = useLocation();
+  const dropdownCloseTimer = useRef(null);
+
+  const openProductsDropdown = () => {
+    if (dropdownCloseTimer.current) {
+      clearTimeout(dropdownCloseTimer.current);
+      dropdownCloseTimer.current = null;
+    }
+    setProductsDropdownOpen(true);
+  };
+
+  const scheduleCloseProductsDropdown = () => {
+    if (dropdownCloseTimer.current) {
+      clearTimeout(dropdownCloseTimer.current);
+    }
+    dropdownCloseTimer.current = setTimeout(() => {
+      setProductsDropdownOpen(false);
+    }, 250);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (dropdownCloseTimer.current) {
+        clearTimeout(dropdownCloseTimer.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,7 +58,6 @@ export default function Header({ onOpenQuoteModal }) {
     { name: 'Why SKSP', path: '/why-sksp' },
     { name: 'Sustainability', path: '/sustainability' },
     { name: 'Clients', path: '/clients' },
-    { name: 'Certifications', path: '/certifications' },
     { name: 'Contact', path: '/contact' }
   ];
 
@@ -83,8 +108,8 @@ export default function Header({ onOpenQuoteModal }) {
               <div key={link.path} className="relative group">
                 {link.hasDropdown ? (
                   <div
-                    onMouseEnter={() => setProductsDropdownOpen(true)}
-                    onMouseLeave={() => setProductsDropdownOpen(false)}
+                    onMouseEnter={openProductsDropdown}
+                    onMouseLeave={scheduleCloseProductsDropdown}
                     className="relative"
                   >
                     <NavLink
@@ -101,7 +126,11 @@ export default function Header({ onOpenQuoteModal }) {
 
                     {/* Dropdown Menu */}
                     {productsDropdownOpen && (
-                      <div className="absolute top-full left-0 w-80 bg-white shadow-2xl rounded-xl border border-slate-100 p-4 mt-1 grid gap-2 z-50 animate-fadeIn">
+                      <div
+                        onMouseEnter={openProductsDropdown}
+                        onMouseLeave={scheduleCloseProductsDropdown}
+                        className="absolute top-full left-0 w-80 bg-white shadow-2xl rounded-xl border border-slate-100 p-4 pt-5 -mt-1 grid gap-2 z-50 animate-fadeIn"
+                      >
                         <div className="text-xs font-bold text-[#F2A900] uppercase tracking-wider px-2 pb-1 border-b border-slate-100">
                           Product Categories
                         </div>
@@ -143,7 +172,7 @@ export default function Header({ onOpenQuoteModal }) {
           </div>
 
           {/* Desktop Right CTA */}
-          <div className="hidden lg:flex items-center space-x-3">
+          <div className="hidden lg:flex items-center space-x-3 mr-4 xl:mr-8">
             <button
               onClick={() => onOpenQuoteModal && onOpenQuoteModal()}
               className="bg-[#F2A900] hover:bg-[#d99700] text-[#041A36] font-bold text-xs xl:text-sm px-4 py-2.5 rounded-lg shadow-md transition-all hover:shadow-lg focus:ring-2 focus:ring-[#F2A900]"

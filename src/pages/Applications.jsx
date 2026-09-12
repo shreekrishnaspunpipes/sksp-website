@@ -75,20 +75,30 @@ export default function Applications({ onOpenQuoteModal }) {
             const Icon = sector.icon;
             return (
               <div key={sector.id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col">
-                <div className="aspect-[16/10] overflow-hidden relative bg-slate-100">
-                  <img src={sector.image} alt={sector.title} className="w-full h-full object-cover" />
+                <div className="aspect-[16/10] overflow-hidden relative bg-slate-100 flex-shrink-0">
+                  <img
+                    src={
+                      sector.id === 'sewerage'
+                        ? '/images/rcc hume pipes-no-label.png'
+                        : sector.id === 'real-estate'
+                        ? '/images/septic tank & more-no-label.png'
+                        : sector.image
+                    }
+                    alt={sector.title}
+                    className="w-full h-full object-cover object-center"
+                  />
                   <div className="absolute top-4 left-4 bg-[#062A5A] text-[#F2A900] p-2.5 rounded-xl shadow-md">
                     <Icon className="w-6 h-6" />
                   </div>
                 </div>
 
-                <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
-                  <div className="space-y-2">
+                <div className="p-6 flex-1 flex flex-col space-y-4">
+                  <div className="space-y-2 flex-grow">
                     <h3 className="text-xl font-bold text-[#062A5A]">{sector.title}</h3>
                     <p className="text-xs text-slate-600 leading-relaxed">{sector.description}</p>
                   </div>
 
-                  <div className="border-t border-slate-100 pt-4 space-y-2">
+                  <div className="mt-auto border-t border-slate-100 pt-4 space-y-2">
                     <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Relevant SKSP Products:</p>
                     <div className="flex flex-wrap gap-1.5">
                       {sector.products.map((item, i) => (

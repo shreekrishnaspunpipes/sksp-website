@@ -1,26 +1,89 @@
 import React, { useState } from 'react';
-import { X, Send, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { X, Send, CheckCircle2, ShieldCheck, AlertCircle } from 'lucide-react';
 import { productsList } from '../data/companyData';
+import LocationAutocomplete from './ui/LocationAutocomplete';
+import CustomSelect from './ui/CustomSelect';
+
+const WEB3FORMS_ACCESS_KEY = '3f5c005a-9607-420c-a382-8bed22f30667';
+const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
+
+const INDIAN_MOBILE_REGEX = /^([6-9])(?!\1{9}$)\d{9}$/;
+const PHONE_ERROR_MESSAGE = 'Please enter a valid 10-digit mobile number.';
 
 export default function QuoteModal({ prefilledProduct, onClose }) {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     email: '',
-    product: prefilledProduct || 'RCC HUME PIPES',
+    product: prefilledProduct || '',
     quantity: '',
     location: '',
     message: ''
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+  const [phoneError, setPhoneError] = useState('');
+  const [productError, setProductError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handlePhoneChange = (e) => {
+    const digitsOnly = e.target.value.replace(/\D/g, '').slice(0, 10);
+    setFormData({ ...formData, phone: digitsOnly });
+    if (phoneError) setPhoneError('');
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      onClose();
-    }, 3000);
+    setSubmitError('');
+
+    if (!INDIAN_MOBILE_REGEX.test(formData.phone)) {
+      setPhoneError(PHONE_ERROR_MESSAGE);
+      return;
+    }
+    setPhoneError('');
+
+    if (!formData.product) {
+      setProductError('Please select a product.');
+      return;
+    }
+    setProductError('');
+
+    setSubmitting(true);
+
+    try {
+      const response = await fetch(WEB3FORMS_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: 'Instant Commercial Quote Request - Shree Krishna Spun Pipes',
+          from_name: 'Shree Krishna Spun Pipes Website',
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          product: formData.product,
+          quantity: formData.quantity,
+          location: formData.location,
+          message: formData.message
+        })
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitted(true);
+        setTimeout(() => {
+          onClose();
+        }, 3000);
+      } else {
+        setSubmitError(result.message || 'Something went wrong. Please try again or call us directly.');
+      }
+    } catch (error) {
+      setSubmitError('Unable to submit your request right now. Please check your connection or call us directly.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -79,31 +142,39 @@ export default function QuoteModal({ prefilledProduct, onClose }) {
                 <label className="block text-slate-700 font-extrabold uppercase mb-1">
                   Phone Number *
                 </label>
-                <input 
-                  type="tel" 
+                <input
+                  type="tel"
                   required
-                  placeholder="+91 98290XXXXX"
+                  inputMode="numeric"
+                  maxLength={10}
+                  placeholder="e.g. 9829039655"
                   value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  onChange={handlePhoneChange}
                   className="w-full bg-slate-50 border border-slate-300 p-2.5 rounded-lg text-xs font-medium focus:outline-none focus:border-sksp-navy"
                 />
+                {phoneError && (
+                  <p className="text-red-600 font-semibold mt-1 normal-case">{phoneError}</p>
+                )}
               </div>
 
               <div>
                 <label className="block text-slate-700 font-extrabold uppercase mb-1">
                   Select Product *
                 </label>
-                <select
+                <CustomSelect
+                  required
                   value={formData.product}
-                  onChange={(e) => setFormData({ ...formData, product: e.target.value })}
-                  className="w-full bg-slate-50 border border-slate-300 p-2.5 rounded-lg text-xs font-bold text-sksp-navy focus:outline-none focus:border-sksp-navy"
-                >
-                  {productsList.map((p) => (
-                    <option key={p.id} value={p.title}>
-                      {p.title}
-                    </option>
-                  ))}
-                </select>
+                  onChange={(val) => {
+                    setFormData({ ...formData, product: val });
+                    if (productError) setProductError('');
+                  }}
+                  placeholder="Select a Product"
+                  options={productsList.map((p) => ({ value: p.title, label: p.title }))}
+                  buttonClassName="w-full bg-slate-50 border border-slate-300 p-2.5 rounded-lg text-xs font-bold text-sksp-navy focus:outline-none focus:border-sksp-navy"
+                />
+                {productError && (
+                  <p className="text-red-600 font-semibold mt-1 normal-case">{productError}</p>
+                )}
               </div>
             </div>
 
@@ -125,12 +196,11 @@ export default function QuoteModal({ prefilledProduct, onClose }) {
                 <label className="block text-slate-700 font-extrabold uppercase mb-1">
                   Site City / State
                 </label>
-                <input 
-                  type="text" 
+                <LocationAutocomplete
                   placeholder="e.g. Kota, Rajasthan"
                   value={formData.location}
-                  onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                  className="w-full bg-slate-50 border border-slate-300 p-2.5 rounded-lg text-xs font-medium focus:outline-none focus:border-sksp-navy"
+                  onChange={(val) => setFormData({ ...formData, location: val })}
+                  inputClassName="w-full bg-slate-50 border border-slate-300 p-2.5 rounded-lg text-xs font-medium focus:outline-none focus:border-sksp-navy"
                 />
               </div>
             </div>
@@ -148,12 +218,20 @@ export default function QuoteModal({ prefilledProduct, onClose }) {
               ></textarea>
             </div>
 
+            {submitError && (
+              <div className="flex items-start space-x-2 p-3 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs font-semibold">
+                <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                <span>{submitError}</span>
+              </div>
+            )}
+
             <button
               type="submit"
-              className="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-black uppercase tracking-wider py-3 rounded-xl shadow-lg transition flex items-center justify-center gap-2"
+              disabled={submitting}
+              className="w-full bg-amber-500 hover:bg-amber-600 disabled:opacity-60 disabled:cursor-not-allowed text-slate-950 text-xs font-black uppercase tracking-wider py-3 rounded-xl shadow-lg transition flex items-center justify-center gap-2"
             >
               <Send className="w-4 h-4" />
-              <span>Submit Instant Pricing Request</span>
+              <span>{submitting ? 'Submitting...' : 'Submit Instant Pricing Request'}</span>
             </button>
 
           </form>

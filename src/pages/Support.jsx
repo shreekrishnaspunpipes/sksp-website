@@ -4,7 +4,7 @@ import Button from '../components/ui/Button';
 import { ChevronDown, ChevronUp, FileText } from 'lucide-react';
 
 export default function Support({ onOpenQuoteModal }) {
-  const [openFaq, setOpenFaq] = useState(0);
+  const [openFaq, setOpenFaq] = useState(-1);
 
   const faqs = [
     {

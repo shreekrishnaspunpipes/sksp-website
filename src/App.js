@@ -15,7 +15,6 @@ import Applications from './pages/Applications';
 import WhySKSP from './pages/WhySKSP';
 import Sustainability from './pages/Sustainability';
 import Clients from './pages/Clients';
-import Certifications from './pages/Certifications';
 import Contact from './pages/Contact';
 import Support from './pages/Support';
 
@@ -44,7 +43,6 @@ function App() {
             <Route path="/why-sksp" element={<WhySKSP onOpenQuoteModal={handleOpenQuoteModal} />} />
             <Route path="/sustainability" element={<Sustainability onOpenQuoteModal={handleOpenQuoteModal} />} />
             <Route path="/clients" element={<Clients onOpenQuoteModal={handleOpenQuoteModal} />} />
-            <Route path="/certifications" element={<Certifications onOpenQuoteModal={handleOpenQuoteModal} />} />
             <Route path="/contact" element={<Contact selectedProductTitle={prefilledProduct} />} />
             <Route path="/support" element={<Support onOpenQuoteModal={handleOpenQuoteModal} />} />
           </Routes>

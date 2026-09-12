@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Phone, Mail, Globe, MapPin, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import Button from '../components/ui/Button';
+import LocationAutocomplete from '../components/ui/LocationAutocomplete';
+import CustomSelect from '../components/ui/CustomSelect';
 import { companyInfo } from '../data/companyData';
 import { products } from '../data/productsData';
 
@@ -8,7 +10,7 @@ const WEB3FORMS_ACCESS_KEY = '3f5c005a-9607-420c-a382-8bed22f30667';
 const WEB3FORMS_ENDPOINT = 'https://api.web3forms.com/submit';
 
 const INDIAN_MOBILE_REGEX = /^([6-9])(?!\1{9}$)\d{9}$/;
-const PHONE_ERROR_MESSAGE = 'Please enter a valid 10-digit Indian mobile number.';
+const PHONE_ERROR_MESSAGE = 'Please enter a valid 10-digit mobile number.';
 
 export default function Contact({ selectedProductTitle = '' }) {
   const [formData, setFormData] = useState({
@@ -25,6 +27,7 @@ export default function Contact({ selectedProductTitle = '' }) {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const [phoneError, setPhoneError] = useState('');
+  const [productError, setProductError] = useState('');
 
   const handlePhoneChange = (e) => {
     const digitsOnly = e.target.value.replace(/\D/g, '').slice(0, 10);
@@ -41,6 +44,12 @@ export default function Contact({ selectedProductTitle = '' }) {
       return;
     }
     setPhoneError('');
+
+    if (!formData.product) {
+      setProductError('Please select a product.');
+      return;
+    }
+    setProductError('');
 
     setSubmitting(true);
 
@@ -228,18 +237,21 @@ export default function Contact({ selectedProductTitle = '' }) {
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-[#062A5A] uppercase mb-1">Product Interest *</label>
-                  <select
-                    required
+                  <CustomSelect
                     name="product"
+                    required
                     value={formData.product}
-                    onChange={(e) => setFormData({ ...formData, product: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-[#062A5A] focus:outline-none bg-white"
-                  >
-                    <option value="">Select a Product</option>
-                    {products.map((p) => (
-                      <option key={p.slug} value={p.name}>{p.name}</option>
-                    ))}
-                  </select>
+                    onChange={(val) => {
+                      setFormData({ ...formData, product: val });
+                      if (productError) setProductError('');
+                    }}
+                    placeholder="Select a Product"
+                    options={products.map((p) => ({ value: p.name, label: p.name }))}
+                    buttonClassName="w-full px-4 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-[#062A5A] focus:outline-none bg-white"
+                  />
+                  {productError && (
+                    <p className="text-xs text-red-600 font-semibold mt-1">{productError}</p>
+                  )}
                 </div>
               </div>
 
@@ -257,13 +269,12 @@ export default function Contact({ selectedProductTitle = '' }) {
                 </div>
                 <div>
                   <label className="block text-xs font-bold text-[#062A5A] uppercase mb-1">Project Site Location</label>
-                  <input
-                    type="text"
+                  <LocationAutocomplete
                     name="location"
                     placeholder="e.g. Kota, Rajasthan"
                     value={formData.location}
-                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                    className="w-full px-4 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-[#062A5A] focus:outline-none"
+                    onChange={(val) => setFormData({ ...formData, location: val })}
+                    inputClassName="w-full px-4 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-[#062A5A] focus:outline-none"
                   />
                 </div>
               </div>
