@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useId } from 'react';
 import { ChevronDown } from 'lucide-react';
 
 export default function CustomSelect({
@@ -14,6 +14,7 @@ export default function CustomSelect({
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const wrapperRef = useRef(null);
+  const listboxId = useId();
 
   const selectedOption = options.find((opt) => opt.value === value);
 
@@ -75,6 +76,7 @@ export default function CustomSelect({
         onKeyDown={handleKeyDown}
         role="combobox"
         aria-expanded={isOpen}
+        aria-controls={listboxId}
         aria-haspopup="listbox"
         className={`flex items-center justify-between ${buttonClassName}`}
       >
@@ -86,6 +88,7 @@ export default function CustomSelect({
 
       {isOpen && (
         <ul
+          id={listboxId}
           role="listbox"
           className="absolute z-30 top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-xl max-h-60 overflow-y-auto"
         >

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useId } from 'react';
 import { indiaLocationSuggestions } from '../../data/indiaLocations';
 
 export default function LocationAutocomplete({
@@ -12,6 +12,7 @@ export default function LocationAutocomplete({
   const [isOpen, setIsOpen] = useState(false);
   const [highlightedIndex, setHighlightedIndex] = useState(-1);
   const wrapperRef = useRef(null);
+  const listboxId = useId();
 
   const query = value.trim().toLowerCase();
   const suggestions = query.length > 0
@@ -75,12 +76,17 @@ export default function LocationAutocomplete({
         onKeyDown={handleKeyDown}
         role="combobox"
         aria-expanded={isOpen && suggestions.length > 0}
+        aria-controls={listboxId}
         aria-autocomplete="list"
         className={inputClassName}
       />
 
       {isOpen && suggestions.length > 0 && (
-        <ul className="absolute z-30 top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-xl max-h-56 overflow-y-auto">
+        <ul
+          id={listboxId}
+          role="listbox"
+          className="absolute z-30 top-full left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-xl max-h-56 overflow-y-auto"
+        >
           {suggestions.map((suggestion, index) => (
             <li key={suggestion}>
               <button
